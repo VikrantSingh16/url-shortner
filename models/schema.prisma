@@ -1,0 +1,23 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model shortUrlSchema{
+   id        Int      @id @default(autoincrement())
+   shortURL String 
+   URL String
+   count Int @default(0)
+   email String?
+}
+
+model User{
+  email String @unique
+  name String
+  password String
+}
