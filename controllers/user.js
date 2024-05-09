@@ -30,27 +30,44 @@ const HandleUserLogin=async (req,res)=>{
             res.send('Password is incorrect')
         }
     }
+    else{
+        res.send('Email ID not found / Please check your email id')
+    }
     
 }
 
 
 const HandleUserSignup = async(req,res)=>{
-    try{
-     const hashedPassword = await bcrpt.hash(req.body.password,10)
-     const user = prisma.user.create({
-         data:{
-             name:req.body.name,
-             email:req.body.email,
-             password:hashedPassword
-         }
-     })
-     user.then((succ,err)=>{if(succ) res.render('login').status(200); else     res.send(err).status(401)})
- 
-    }catch(err){
-     console.log(err);
-     res.send('Something went wrong').status(401)
+    if(req.body.password.length<7){
+        res.status(201).json({msg:'Password length should be more than 6'})
     }
- }
+    else{
+    try {
+        const hashedPassword = await bcrpt.hash(req.body.password, 10);
+        const user = await prisma.user.create({
+            data: {
+                name: req.body.name,
+                email: req.body.email,
+                password: hashedPassword
+            }
+        });
+        
+        console.log(user); // Optional: Log the created user
+
+        res.render('login')
+    } catch (error) {
+        // Check if the error is due to unique constraint violation
+        if (error.code === 'P2002' && error.meta && error.meta.target.includes('email')) {
+            // Email is already in use
+            res.status(400).json({ error: 'Email is already in use' });
+        } else {
+            // Other errors
+            console.error(error);
+            res.status(500).json({ error: 'Something went wrong' });
+        }
+    }}
+};
+ 
 
  const HandleLoginPage = (req,res)=>{
     res.render('login')
