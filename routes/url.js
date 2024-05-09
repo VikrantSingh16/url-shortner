@@ -4,7 +4,7 @@ const {handleDeleteURL,handleCreateShortURL,handleGetAllData,handleUpdateCountAn
 
 
 
-router.post('/save:email',handleCreateShortURL)
+router.post('/save/:email',handleCreateShortURL)
 
 router.get('/',handleGetAllData)
 

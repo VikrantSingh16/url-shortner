@@ -33,7 +33,7 @@ const handleUpdateCountAndRedirect = async(req,res)=>{
 }
 
 const handleCreateShortURL = async(req,res)=>{
-    
+   
     const url = req.body.fullUrl;
     const email = req.params.email;
    await prisma.shortUrlSchema.create({
