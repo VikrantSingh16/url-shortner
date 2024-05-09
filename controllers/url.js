@@ -2,9 +2,14 @@ const prisma = require('../db/client')
 
 const shortid = require('shortid')
 const handleGetAllData = async(req,res)=>{
-    const shortUrls =await prisma.shortUrlSchema.findMany()
+    const email = req.params.email;
+    const shortUrls =await prisma.shortUrlSchema.findMany({
+where:{
+    email:email
+}
+    })
     
-    res.render('index',{shortUrls:shortUrls})
+    res.render('index',{shortUrls:shortUrls,email:email})
     }
 
 const handleUpdateCountAndRedirect = async(req,res)=>{

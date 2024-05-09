@@ -6,7 +6,7 @@ const {handleDeleteURL,handleCreateShortURL,handleGetAllData,handleUpdateCountAn
 
 router.post('/save/:email',handleCreateShortURL)
 
-router.get('/',handleGetAllData)
+router.get('/:email',handleGetAllData)
 
 router.get('/:shortURL', handleUpdateCountAndRedirect)
 
