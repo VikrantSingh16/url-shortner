@@ -12,5 +12,6 @@ app.set('view engine','ejs')
 app.use('/shorturls',UrlRouter)
 app.use('/user',UserRouter)
 app.use('/',UrlRedirectRouter)
-app.listen((3000),(req,res)=>{console.log('Server is running at 3000');})
+const PORT = process.env.PORT || 3000
+app.listen((PORT),(req,res)=>{console.log('Server is running at 3000');})
 
