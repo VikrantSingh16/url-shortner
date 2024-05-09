@@ -46,7 +46,7 @@ const handleCreateShortURL = async(req,res)=>{
             email:email
         }
     })
-    if(findUrl.length>0){
+    if(findUrl.length==0){
         res.status(409).send('This website is already shortened')
     }
    await prisma.shortUrlSchema.create({
